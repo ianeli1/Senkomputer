@@ -526,16 +526,16 @@ window.dec0der = {
     0: nothing,
     1: nothing,
     2: () => {
-        window.ValBlk[window.ValBlk[window.Counter.val].toInt] = new EightBit(0);
+        window.ValBlk[window.ValBlk[window.Counter.val].toInt()] = new EightBit(0);
     },
     3: () => {
-        window.ValBlk[window.ValBlk[window.Counter.val].toInt] = window.normal;
+        window.ValBlk[window.ValBlk[window.Counter.val].toInt()] = window.normal;
     },
     4: () => {
         window.normal = window.ValBlk[window.Counter.val];
     },
     5: () => {
-        window.ValBlk[window.ValBlk[window.Counter.val].toInt] = window.carry;
+        window.ValBlk[window.ValBlk[window.Counter.val].toInt()] = window.carry;
     },
     6: () => {
         window.normal = window.ValBlk[window.Counter.val];
