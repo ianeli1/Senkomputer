@@ -591,7 +591,9 @@ window.dec0der = {
         window.ValBlk = window.RAM.val[window.ValBlk[window.Counter.val]];
     },
     28: () => {
-        [window.RAM.ins[window.ValBlk[window.Counter.val]].toInt(), window.RAM.val[window.ValBlk[window.Counter.val].toInt()]] = [window.InsBlk, window.ValBlk]
+
+        window.RAM.ins[window.ValBlk[window.Counter.val].toInt()] = window.InsBlk
+        window.RAM.val[window.ValBlk[window.Counter.val].toInt()] = window.ValBlk
     },
     29: nothing,
     30: nothing,
