@@ -61,15 +61,19 @@ if (cnv && clk && updBtn && clkBtn) {
   const canvas = new CanvasHandler(cnv);
   const kore = new Kore(_cacheSize, canvas);
   clkBtn.addEventListener("click", () => {
-    kore.clk();
+    console.log({ instruction: kore.clk() });
     updateTable(kore.insBlock, kore.valBlock, kore.counter);
   });
   updBtn.addEventListener("click", () => {
     for (let i = 0; i <= 7; i++) {
-      kore.setIns(i, new EightBit(+(table.ins[i]?.innerText || 0)));
-      kore.setVal(i, new EightBit(+(table.val[i]?.innerText || 0)));
-      updateTable(kore.insBlock, kore.valBlock, kore.counter);
+      const ins = table.ins[i];
+      const val = table.val[i];
+      if (ins && val) {
+        console.log(`${i} => ins: ${ins.innerText}, val: ${val.innerText}`);
+        kore.setIns(i, new EightBit(+(ins.innerText || 0)));
+        kore.setVal(i, new EightBit(+(val.innerText || 0)));
+      }
     }
-    console.log(kore);
+    updateTable(kore.insBlock, kore.valBlock, kore.counter);
   });
 }

@@ -27,7 +27,7 @@ export class Kore {
     this.counter = 0;
     this.cacheSize = cacheSize;
     this.KASCII = KASCII;
-    this.Decoder = decoder.bind(this);
+    this.Decoder = decoder.bind(this)();
     this.video = new Video(200, 100, canvas);
   }
 
