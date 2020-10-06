@@ -1,0 +1,23 @@
+body {
+    background: black;
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+    color: green;
+}
+
+#screen {
+    background: rgb(0, 10, 0);
+}
+#monitor{
+    display: flex;
+    align-content: space-between;
+    flex-direction: row;
+}
+.current{
+    color: black;
+    background-color: yellow;
+}
+.cache{
+    border-radius: 30%;
+}
