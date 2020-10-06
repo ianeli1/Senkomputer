@@ -6,7 +6,6 @@ const nothing = () => void null;
 
 export const decoder = function (this: Kore) {
   return {
-    this: this,
     0: nothing,
     1: nothing,
     2: () => {

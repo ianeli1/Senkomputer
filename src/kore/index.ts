@@ -29,6 +29,9 @@ export class Kore {
     this.KASCII = KASCII;
     this.Decoder = decoder.bind(this)();
     this.video = new Video(200, 100, canvas);
+    this.setIns = this.setIns.bind(this);
+    this.setVal = this.setVal.bind(this);
+    this.clk = this.clk.bind(this);
   }
 
   setIns(i: number, ins: EightBit) {
