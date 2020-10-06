@@ -125,5 +125,6 @@ export const decoder = function (this: Kore) {
     },
     50: nothing,
     51: nothing,
+    71: () => void console.log("Hello world", this),
   };
 };

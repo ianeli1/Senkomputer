@@ -72,6 +72,7 @@ Instruction List:
 51 : (R) skip this clock.
 - VIDEO MODE 1 - NYI
 52~70 : (R) skip this clock.
+71 : [DEBUG] console.log("Hello world")
 
 
 KASCII
