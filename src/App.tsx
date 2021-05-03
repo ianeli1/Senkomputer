@@ -10,11 +10,12 @@ import {
   Toolbar,
   Typography,
 } from "@material-ui/core";
-import { PlayArrow } from "@material-ui/icons";
+import { Eject, PlayArrow } from "@material-ui/icons";
 import { EightBit } from "./kore/EightBit";
 import { Row } from "./components/Row";
 import { Kore } from "./kore";
 import { CanvasHandler } from "./CanvasHandler";
+import { fillRAMBlockWithText } from "./kore/memory";
 
 const AppStyles = makeStyles((theme: Theme) => ({
   root: {},
@@ -66,6 +67,35 @@ export function App() {
           </Typography>
           <IconButton edge="end" onClick={onRun}>
             <PlayArrow />
+          </IconButton>
+
+          <IconButton edge="end">
+            <label htmlFor="InputButton">
+              <input
+                type="file"
+                accept=".kore"
+                id="InputButton"
+                hidden
+                onChange={(e) => {
+                  e.preventDefault();
+                  e.target.files
+                    ?.item(0)
+                    ?.text()
+                    .then((data) => {
+                      if (data) {
+                        fillRAMBlockWithText(data, kore.RAM);
+                        kore.insBlock = kore.RAM[0].getInsBlock();
+                        kore.valBlock = kore.RAM[0].getValBlock();
+                        setTable(koreToTable(kore));
+                        console.log(data);
+                      } else {
+                        console.log("error lol");
+                      }
+                    });
+                }}
+              />
+              <Eject />
+            </label>
           </IconButton>
         </Toolbar>
       </AppBar>

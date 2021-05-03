@@ -70,14 +70,20 @@ export const decoder = function (this: Kore) {
       this.normal = this.ALU.gt(this.normal, this.valBlock[this.counter]);
     },
     26: nothing,
-    27: nothing /*() => {
-      this.insBlock = this.RAM.ins[this.valBlock[this.counter]];
-      this.valBlock = this.RAM.val[this.valBlock[this.counter]];
-    }*/,
-    28: nothing /*() => {
-      this.RAM.ins[this.valBlock[this.counter].toInt()] = this.insBlock;
-      this.RAM.val[this.valBlock[this.counter].toInt()] = this.valBlock;
-    }*/,
+    27: () => {
+      const block = this.RAM[this.valBlock[this.counter].toInt()];
+
+      this.insBlock = block.getInsBlock();
+      this.valBlock = block.getValBlock();
+    },
+    28: () => {
+      const block = this.RAM[this.valBlock[this.counter].toInt()];
+      block.setBlock(
+        Array(this.cacheSize * 2).map((_, index) =>
+          index % 2 === 0 ? this.insBlock[index] : this.valBlock[index]
+        )
+      );
+    },
     29: nothing,
     30: nothing,
     31: nothing,
