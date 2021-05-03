@@ -26,10 +26,10 @@ module.exports = {
   },
   output: {
     filename: "bundle.js",
-    path: path.resolve(__dirname, "/dist"),
+    path: path.resolve(__dirname, "./dist"),
   },
-  watch: true,
-  mode: "development",
+  watch: false,
+  mode: "production",
   plugins: [
     new HtmlWebpackPlugin({
       template: "./public/index.html",
