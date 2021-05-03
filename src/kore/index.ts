@@ -1,7 +1,12 @@
 import { ALU } from "./ALU";
 import { EightBit } from "./EightBit";
 import { KASCII } from "./KASCII";
-import { CacheBlock, createCacheBlock, RAMBlock } from "./memory";
+import {
+  CacheBlock,
+  createCacheBlock,
+  createRAMBlock,
+  RAMBlock,
+} from "./memory";
 import { Video } from "./video";
 import { decoder } from "./Decoder";
 import { CanvasHandler } from "src/CanvasHandler";
@@ -29,6 +34,10 @@ export class Kore {
     this.KASCII = KASCII;
     this.Decoder = decoder.bind(this)();
     this.video = new Video(200, 100, canvas);
+    this.setIns = this.setIns.bind(this);
+    this.setVal = this.setVal.bind(this);
+    this.clk = this.clk.bind(this);
+    this.RAM = createRAMBlock(256); //256 memory banks, 256 * 16 * 16, 65kb
   }
 
   setIns(i: number, ins: EightBit) {

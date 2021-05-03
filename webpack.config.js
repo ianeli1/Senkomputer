@@ -1,13 +1,23 @@
 const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  entry: "./src/index.ts",
+  entry: "./src/index.tsx",
   module: {
     rules: [
+      // we use babel-loader to load our jsx and tsx files
       {
-        test: /\.tsx?$/,
-        use: "ts-loader",
+        test: /\.(ts|js)x?$/,
         exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+        },
+      },
+
+      // css-loader to bundle all the css files into one file and style-loader to add all the styles  inside the style tag of the document
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
       },
     ],
   },
@@ -16,8 +26,13 @@ module.exports = {
   },
   output: {
     filename: "bundle.js",
-    path: path.resolve(__dirname, "public/js"),
+    path: path.resolve(__dirname, "./dist"),
   },
-  watch: true,
-  mode: "development",
+  watch: false,
+  mode: "production",
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "./public/index.html",
+    }),
+  ],
 };

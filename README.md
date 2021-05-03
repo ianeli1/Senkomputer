@@ -124,3 +124,13 @@ CarryACC = carry accumulator value
 | 81     | Q      | 82     | R      | 83     | S      | 84     | T      |
 | 85     | U      | 86     | V      | 87     | W      | 88     | X      |
 | 89     | Y      | 90     | Z      | tbd    | tbd    | tbd    | tbd    |
+
+### .kore file upload
+
+Senkomputer now supports the upload of .kore files, the files are simple text files and are formatted in the following way
+
+```ts
+<instruction integer> <value integer> <instruction integer> <value integer> <instruction integer> <value integer> <instruction integer> <value integer> ...
+```
+
+They will overwrite the RAM blocks and the first RAM block with automatically overwrite the INS and VAL blocks
