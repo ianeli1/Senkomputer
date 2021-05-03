@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   AppBar,
   Container,
@@ -10,10 +10,11 @@ import {
   Toolbar,
   Typography,
 } from "@material-ui/core";
-import { Refresh } from "@material-ui/icons";
-import { useKontext } from "./index";
+import { PlayArrow } from "@material-ui/icons";
 import { EightBit } from "./kore/EightBit";
 import { Row } from "./components/Row";
+import { Kore } from "./kore";
+import { CanvasHandler } from "./CanvasHandler";
 
 const AppStyles = makeStyles((theme: Theme) => ({
   root: {},
@@ -25,16 +26,34 @@ const AppStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
+type table = { ins: number; val: number }[];
+
+function koreToTable(kore: Kore) {
+  return Object.entries(kore.insBlock).reduce(
+    (acc, [key, value]: [string, EightBit]) => [
+      ...acc,
+      { ins: value.toInt(), val: kore.valBlock[key].toInt() as number },
+    ],
+    [] as table
+  );
+}
+
 export function App() {
   const classes = AppStyles();
-  const { kore, ref } = useKontext();
-  const [localKore, setKore] = useState(kore);
+  const canvas = useRef(new CanvasHandler());
+  const { current: kore } = useRef(new Kore(16, canvas.current));
   const updateBlock = (where: number) => {
     return (ins: number, val: number) => {
       kore.setIns(where, new EightBit(ins));
       kore.setVal(where, new EightBit(val));
-      console.log(kore);
+      setTable(koreToTable(kore));
     };
+  };
+  const [table, setTable] = useState(koreToTable(kore));
+
+  const onRun = () => {
+    kore.clk();
+    setTable(koreToTable(kore));
   };
 
   return (
@@ -45,25 +64,29 @@ export function App() {
           <Typography variant="h6" className={classes.title}>
             Senkomputer
           </Typography>
-          <IconButton edge="end" onClick={() => setKore(kore)}>
-            <Refresh />
+          <IconButton edge="end" onClick={onRun}>
+            <PlayArrow />
           </IconButton>
         </Toolbar>
       </AppBar>
       <Container className={classes.container}>
         <div>
-          <canvas ref={ref} />
+          <canvas
+            style={{ background: "#000100", width: 800, height: 400 }}
+            ref={(x) => x && canvas.current.setCanvas(x)}
+          />
         </div>
         <Divider orientation="vertical" />
         <div>
           <div>
-            {Object.entries(localKore.insBlock).map(([index, x]) => (
+            {table.map(({ val, ins }, i) => (
               <Row
-                key={index}
-                id={+index}
-                ins={x.toInt()}
-                val={localKore.valBlock[index].toInt()}
-                onUpdate={updateBlock(+index)}
+                key={i}
+                id={i}
+                ins={ins}
+                val={val}
+                onUpdate={updateBlock(i)}
+                selected={kore.counter == i}
               />
             ))}
           </div>

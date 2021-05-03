@@ -14,6 +14,7 @@ interface RowProps {
   val: number;
   onUpdate: (ins: number, val: number) => void;
   id: number;
+  selected?: boolean;
 }
 
 export function Row(props: RowProps) {
@@ -37,12 +38,12 @@ export function Row(props: RowProps) {
   }
 
   return (
-    <Card style={{ display: "flex", flexDirection: "row" }}>
+    <Card style={{ display: "flex", flexDirection: "row", margin: "0.25rem" }}>
       <Typography
         variant="h6"
         style={{
-          padding: 4,
-          background: "#d3d3d3",
+          padding: 2,
+          background: props.selected ? "green" : "#d3d3d3",
           borderRadius: 4,
           margin: 4,
         }}
@@ -61,7 +62,7 @@ export function Row(props: RowProps) {
         onChange={(e) => void setNumber(setVal, e.target.value)}
       />
       <Fade in={localIns != props.ins || localVal != props.val}>
-        <div>
+        <div style={{ display: "flex" }}>
           <IconButton onClick={() => void props.onUpdate(localIns, localVal)}>
             <Save />
           </IconButton>
